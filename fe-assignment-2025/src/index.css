@@ -1,6 +1,7 @@
 @import "../src/CSS/modal.css";
 @import "../src/CSS/form.css";
 @import "../src/CSS/buttons.css";
+@import "../src/CSS/inputs.css";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

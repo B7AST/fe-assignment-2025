@@ -5,6 +5,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./index.css";
 import "./App.css";
+import InputText from "./components/Inputs/InputText";
+import InputTextArea from "./components/Inputs/InputTextArea";
+import InputEmail from "./components/Inputs/InputEmail";
 
 const validationSchema = Yup.object().shape({
   subject: Yup.string().required("Subject is required"),
@@ -86,25 +89,19 @@ function App() {
               return (
                 <Form className="emailForm">
                   <h2>Email Sent Form</h2>
-                  <div>
-                    <label>Subject</label>
-                    <Field name="subject" type="text" />
-                    <ErrorMessage
-                      name="subject"
-                      component="div"
-                      className="error"
-                    />
-                  </div>
-                  <div>
-                    <label>Description</label>
-                    <Field name="description" as="textarea" />
-                    <ErrorMessage
-                      name="description"
-                      component="div"
-                      className="error"
-                    />
-                  </div>
-                  <div>
+                  <InputText
+                    label="Subject"
+                    name="subject"
+                    required
+                    placeholder="Enter subject"
+                  />
+                  <InputTextArea
+                    label="Description"
+                    name="description"
+                    required
+                    placeholder="Enter description"
+                  />
+                  <div className="emailListSection">
                     <label>Available Emails</label>
                     <div className="emailListTable">
                       <ul>
@@ -115,34 +112,32 @@ function App() {
                         ))}
                       </ul>
                     </div>
-                    <SubmitButton
-                      type="button"
-                      onClick={() =>
-                        setFieldValue(
-                          "destinationEmails",
-                          filteredEmails.join(", ")
-                        )
-                      }
-                    >
-                      Add All Emails
-                    </SubmitButton>
-                    <CancelButton
-                      type="button"
-                      onClick={() => setFieldValue("destinationEmails", "")}
-                    >
-                      Remove All Emails
-                    </CancelButton>
-                    <label>Destination Emails (comma separated)</label>
-                    <Field
+                    <div className="actionButtons">
+                      <SubmitButton
+                        type="button"
+                        onClick={() =>
+                          setFieldValue(
+                            "destinationEmails",
+                            filteredEmails.join(", ")
+                          )
+                        }
+                      >
+                        Add All Emails
+                      </SubmitButton>
+                      <CancelButton
+                        type="button"
+                        onClick={() => setFieldValue("destinationEmails", "")}
+                      >
+                        Remove All Emails
+                      </CancelButton>
+                    </div>
+                    <InputEmail
+                      label="Destination Emails"
                       name="destinationEmails"
+                      required
                       type="text"
                       placeholder="Enter emails"
                       list="user-emails"
-                    />
-                    <ErrorMessage
-                      name="destinationEmails"
-                      component="div"
-                      className="error"
                     />
                   </div>
                   <div className="actions">

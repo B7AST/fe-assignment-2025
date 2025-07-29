@@ -1,0 +1,22 @@
+.inputGroup {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+
+  label {
+    .required {
+      color: var(--text-color-error);
+    }
+  }
+
+  input {
+    width: 100%;
+    padding: var(--padding-half);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .error {
+    color: var(--text-color-error);
+    font-size: var(--half-font-size);
+  }
+}
