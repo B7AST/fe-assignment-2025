@@ -1,14 +1,22 @@
 export const AddButton = ({ onClick, text }) => {
   return (
-    <button className="Button addButton" onClick={onClick}>
+    <button type="button" className="Button addButton" onClick={onClick}>
       {text}
+    </button>
+  );
+};
+
+export const AddAllButton = ({ onClick, children }) => {
+  return (
+    <button type="button" className="Button addAllButton" onClick={onClick}>
+      {children}
     </button>
   );
 };
 
 export const CancelButton = ({ onClick, children }) => {
   return (
-    <button className="Button cancelButton" onClick={onClick}>
+    <button type="button" className="Button cancelButton" onClick={onClick}>
       {children}
     </button>
   );

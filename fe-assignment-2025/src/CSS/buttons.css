@@ -47,6 +47,19 @@
   }
 }
 
+.addAllButton {
+  color: var(--text-color-black);
+  text-align: center;
+  border: 1px solid #4caf50;
+  border-radius: 0.5rem;
+  
+
+  &:hover {
+    background-color: #4caf50;
+    color: var(--text-color-white);
+  }
+}
+
 .actionButton {
   border: 0;
   background-color: transparent;

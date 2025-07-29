@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { AddButton, CancelButton, SubmitButton } from "./components/Buttons";
+import { AddButton, CancelButton, SubmitButton, AddAllButton } from "./components/Buttons";
 import Modal from "./components/Modal";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import "./index.css";
 import "./App.css";
@@ -60,7 +60,7 @@ function App() {
 
   return (
     <>
-      <AddButton onClick={toggleOpen} text="Form" />
+      <AddButton onClick={toggleOpen} text="Send Mail" />
       <Modal isOpen={isOpen} onClose={toggleOpen}>
         {loading ? (
           <div className="loading">Loading emails...</div>
@@ -113,17 +113,17 @@ function App() {
                       </ul>
                     </div>
                     <div className="actionButtons">
-                      <SubmitButton
+                      <AddAllButton
                         type="button"
                         onClick={() =>
                           setFieldValue(
                             "destinationEmails",
-                            filteredEmails.join(", ")
+                            userEmails.join(", ")
                           )
                         }
                       >
                         Add All Emails
-                      </SubmitButton>
+                      </AddAllButton>
                       <CancelButton
                         type="button"
                         onClick={() => setFieldValue("destinationEmails", "")}
