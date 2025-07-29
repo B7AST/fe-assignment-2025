@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AddButton, CancelButton, SubmitButton } from "./components/Buttons";
 import Modal from "./components/Modal";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -56,7 +57,7 @@ function App() {
 
   return (
     <>
-      <button onClick={toggleOpen}>Form</button>
+      <AddButton onClick={toggleOpen} text="Form" />
       <Modal isOpen={isOpen} onClose={toggleOpen}>
         {loading ? (
           <div className="loading">Loading emails...</div>
@@ -114,7 +115,7 @@ function App() {
                         ))}
                       </ul>
                     </div>
-                    <button
+                    <SubmitButton
                       type="button"
                       onClick={() =>
                         setFieldValue(
@@ -124,13 +125,13 @@ function App() {
                       }
                     >
                       Add All Emails
-                    </button>
-                    <button
+                    </SubmitButton>
+                    <CancelButton
                       type="button"
                       onClick={() => setFieldValue("destinationEmails", "")}
                     >
                       Remove All Emails
-                    </button>
+                    </CancelButton>
                     <label>Destination Emails (comma separated)</label>
                     <Field
                       name="destinationEmails"
@@ -145,12 +146,12 @@ function App() {
                     />
                   </div>
                   <div className="actions">
-                    <button type="button" onClick={toggleOpen}>
+                    <CancelButton type="button" onClick={toggleOpen}>
                       Close
-                    </button>
-                    <button type="submit" disabled={isSubmitting}>
+                    </CancelButton>
+                    <SubmitButton type="submit" disabled={isSubmitting}>
                       Submit
-                    </button>
+                    </SubmitButton>
                   </div>
                 </Form>
               );

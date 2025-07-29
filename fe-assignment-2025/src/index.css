@@ -1,11 +1,40 @@
 @import "../src/CSS/modal.css";
 @import "../src/CSS/form.css";
+@import "../src/CSS/buttons.css";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  /* text colors */
+  --text-color-white: #fff;
+  --text-color-black: #000;
+  --text-color-error: #d3453b;
+
+  /* font sizes */
+  --regular-font-size: 1rem;
+  --half-font-size: 0.7rem;
+  --button-font-size: 1rem;
+  --heading-font-size: 2rem;
+  --subheading-font-size: 1.5rem;
+  --paragraph-font-size: 1rem;
+
+  /* paddings and margins */
+  --padding-full: 1rem;
+  --padding-half: 0.5rem;
+  --padding-quarter: 0.25rem;
+  --margin-full: 1rem;
+  --margin-half: 0.5rem;
+  --margin-quarter: 0.25rem;
+  --button-padding-full: 1.5rem;
+  --button-padding-half: 0.75rem;
+
+  /* spacing */
+  --gap-full: 1rem;
+  --gap-half: 0.5rem;
+  --gap-quarter: 0.25rem;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
