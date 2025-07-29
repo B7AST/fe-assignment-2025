@@ -1,5 +1,11 @@
 @import "../src/CSS/modal.css";
+@import "../src/CSS/form.css";
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }

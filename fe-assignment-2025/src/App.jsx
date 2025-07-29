@@ -32,6 +32,24 @@ function App() {
     setIsOpen(!isOpen);
   };
 
+  const [userEmails, setUserEmails] = useState([]);
+
+  React.useEffect(() => {
+    async function fetchUserEmails() {
+      try {
+        const response = await fetch(
+          "https://686547495b5d8d0339808f5d.mockapi.io/spitogatos/api/customer-email-lookup"
+        );
+        const users = await response.json();
+        const emails = users.map((user) => user.email);
+        setUserEmails(emails);
+      } catch (error) {
+        console.error("Failed to fetch user emails:", error);
+      }
+    }
+    fetchUserEmails();
+  }, []);
+
   return (
     <>
       <button onClick={toggleOpen}>Form</button>
@@ -49,44 +67,85 @@ function App() {
             setIsOpen(false);
           }}
         >
-          {({ isSubmitting }) => (
-            <Form>
-              <h2>Form</h2>
-              <div>
-                <label>Subject</label>
-                <Field name="subject" type="text" />
-                <ErrorMessage
-                  name="subject"
-                  component="div"
-                  className="error"
-                />
-              </div>
-              <div>
-                <label>Description</label>
-                <Field name="description" as="textarea" />
-                <ErrorMessage
-                  name="description"
-                  component="div"
-                  className="error"
-                />
-              </div>
-              <div>
-                <label>Destination Emails (comma separated)</label>
-                <Field name="destinationEmails" type="text" />
-                <ErrorMessage
-                  name="destinationEmails"
-                  component="div"
-                  className="error"
-                />
-              </div>
-              <button type="button" onClick={toggleOpen}>
-                Close
-              </button>
-              <button type="submit" disabled={isSubmitting}>
-                Submit
-              </button>
-            </Form>
-          )}
+          {({ isSubmitting, setFieldValue, values }) => {
+            // Filter emails based on input
+            const filterText = values.destinationEmails.trim().toLowerCase();
+            const filteredEmails = filterText
+              ? userEmails.filter((email) =>
+                  email.toLowerCase().includes(filterText)
+                )
+              : userEmails;
+            return (
+              <Form className="emailForm">
+                <h2>Email Sent Form</h2>
+                <div>
+                  <label>Subject</label>
+                  <Field name="subject" type="text" />
+                  <ErrorMessage
+                    name="subject"
+                    component="div"
+                    className="error"
+                  />
+                </div>
+                <div>
+                  <label>Description</label>
+                  <Field name="description" as="textarea" />
+                  <ErrorMessage
+                    name="description"
+                    component="div"
+                    className="error"
+                  />
+                </div>
+                <div>
+                  <label>Available Emails</label>
+                  <div className="emailListTable">
+                    <ul>
+                      {filteredEmails.map((email, index) => (
+                        <li key={index}>
+                          {email} <span className="deleteMail">x</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setFieldValue("destinationEmails", filteredEmails.join(", "))
+                    }
+                  >
+                    Add All Emails
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFieldValue("destinationEmails", "")}
+                    style={{ marginBottom: "10px", marginLeft: "10px" }}
+                  >
+                    Remove All Emails
+                  </button>
+                  <label>Destination Emails (comma separated)</label>
+                  <Field
+                    name="destinationEmails"
+                    type="text"
+                    placeholder="Enter emails"
+                    list="user-emails"
+                  />
+                  <ErrorMessage
+                    name="destinationEmails"
+                    component="div"
+                    className="error"
+                  />
+                </div>
+                <div className="actions">
+                  <button type="button" onClick={toggleOpen}>
+                    Close
+                  </button>
+                  <button type="submit" disabled={isSubmitting}>
+                    Submit
+                  </button>
+                </div>
+              </Form>
+            );
+          }}
         </Formik>
       </Modal>
     </>
