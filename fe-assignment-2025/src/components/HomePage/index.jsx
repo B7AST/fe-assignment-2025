@@ -62,6 +62,7 @@ const HomePage = () => {
           <AddButton onClick={toggleOpen} text="Send Mail" />
         </div>
       </div>
+      {/* Modal for sending emails */}
       <Modal isOpen={isOpen} onClose={toggleOpen}>
         {loading ? (
           <div className="loading">Loading emails...</div>
@@ -80,13 +81,6 @@ const HomePage = () => {
             }}
           >
             {({ isSubmitting, setFieldValue, values }) => {
-              // // Filter emails based on input
-              // const filterText = values.destinationEmails.trim().toLowerCase();
-              // const filteredEmails = filterText
-              //   ? userEmails.filter((email) =>
-              //       email.toLowerCase().includes(filterText)
-              //     )
-              //   : userEmails;
               return (
                 <Form className="emailForm">
                   <h2>Email Sent Form</h2>
