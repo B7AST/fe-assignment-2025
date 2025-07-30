@@ -10,14 +10,3 @@ const apiRequest = axios.create({
 });
 
 export default apiRequest;
-
-// Function to fetch data from a specific endpoint
-// export const fetchData = async (endpoint) => {
-//   try {
-//     const response = await apiRequest.get(endpoint);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//     throw error;
-//   }
-// };

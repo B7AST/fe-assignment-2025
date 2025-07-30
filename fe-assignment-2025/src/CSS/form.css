@@ -1,9 +1,13 @@
 .emailForm {
-  /* min-height: 450px; */
   display: grid;
   grid-template-rows: auto 1fr auto auto auto;
   gap: var(--gap-half);
   padding: 1rem;
+  overflow: auto;
+
+  @media (orientation: landscape) {
+    overflow: auto;
+  }
 
   .emailListSection {
     .emailListTable {
