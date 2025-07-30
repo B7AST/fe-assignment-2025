@@ -16,7 +16,7 @@
   text-align: center;
 
   &:hover {
-    background-color: lightgrey;
+    background-color: #1f566a;
     color: var(--text-color-white);
   }
 }
