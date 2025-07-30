@@ -20,7 +20,8 @@
     font-size: var(--half-font-size);
   }
 
-  /* textarea {
-    resize: none;
-  } */
+  .css-1dyz3mf {
+    max-height: 8rem !important;
+    overflow-y: auto !important;
+  }
 }

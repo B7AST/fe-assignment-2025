@@ -7,11 +7,12 @@ import {
   AddAllButton,
 } from "../../components/Buttons";
 import Modal from "../../components/Modal";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import InputText from "../../components/Inputs/InputText";
 import InputTextArea from "../../components/Inputs/InputTextArea";
 import InputEmail from "../../components/Inputs/InputEmail";
+import EmailSelect from "../../components/Inputs/Select";
 import banner from "../../assets/bannerjpg.jpg";
 
 const validationSchema = Yup.object().shape({
@@ -19,19 +20,9 @@ const validationSchema = Yup.object().shape({
   description: Yup.string()
     .required("Description is required")
     .min(10, "Description must be at least 10 characters"),
-  destinationEmails: Yup.string()
-    .required("At least one email is required")
-    .test(
-      "is-valid-emails",
-      "Enter valid email(s), separated by commas",
-      (value) => {
-        if (!value) return false;
-        const emails = value.split(",").map((e) => e.trim());
-        return emails.every((email) =>
-          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-        );
-      }
-    ),
+  destinationEmails: Yup.array()
+    .min(1, "At least one email is required")
+    .of(Yup.string().email("Enter valid email(s)")),
 });
 const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,11 +57,7 @@ const HomePage = () => {
     <>
       <Navbar />
       <div className="banner">
-        <img
-          src={banner}
-          alt="Banner"
-          className="banner-img"
-        />
+        <img src={banner} alt="Banner" className="banner-img" />
         <div className="banner-actions">
           <AddButton onClick={toggleOpen} text="Send Mail" />
         </div>
@@ -83,7 +70,7 @@ const HomePage = () => {
             initialValues={{
               subject: "",
               description: "",
-              destinationEmails: "",
+              destinationEmails: [],
             }}
             validationSchema={validationSchema}
             onSubmit={(values, { resetForm }) => {
@@ -93,13 +80,13 @@ const HomePage = () => {
             }}
           >
             {({ isSubmitting, setFieldValue, values }) => {
-              // Filter emails based on input
-              const filterText = values?.destinationEmails.trim().toLowerCase();
-              const filteredEmails = filterText
-                ? userEmails.filter((email) =>
-                    email.toLowerCase().includes(filterText)
-                  )
-                : userEmails;
+              // // Filter emails based on input
+              // const filterText = values.destinationEmails.trim().toLowerCase();
+              // const filteredEmails = filterText
+              //   ? userEmails.filter((email) =>
+              //       email.toLowerCase().includes(filterText)
+              //     )
+              //   : userEmails;
               return (
                 <Form className="emailForm">
                   <h2>Email Sent Form</h2>
@@ -119,7 +106,7 @@ const HomePage = () => {
                     <label>Available Emails</label>
                     <div className="emailListTable">
                       <ul>
-                        {filteredEmails.map((email, index) => (
+                        {userEmails.map((email, index) => (
                           <li key={index}>
                             {email} <span className="deleteMail">x</span>
                           </li>
@@ -130,28 +117,32 @@ const HomePage = () => {
                       <AddAllButton
                         type="button"
                         onClick={() =>
-                          setFieldValue(
-                            "destinationEmails",
-                            userEmails.join(", ")
-                          )
+                          setFieldValue("destinationEmails", userEmails)
                         }
                       >
                         Add All Emails
                       </AddAllButton>
                       <CancelButton
                         type="button"
-                        onClick={() => setFieldValue("destinationEmails", "")}
+                        onClick={() => setFieldValue("destinationEmails", [])}
                       >
                         Remove All Emails
                       </CancelButton>
                     </div>
-                    <InputEmail
-                      label="Destination Emails"
+                    <EmailSelect
+                      label="Select Destination Emails"
                       name="destinationEmails"
                       required
-                      type="text"
-                      placeholder="Enter emails"
-                      list="user-emails"
+                      options={userEmails.map((email) => ({
+                        value: email,
+                        label: email,
+                      }))}
+                      value={values.destinationEmails.map((email) => ({
+                        value: email,
+                        label: email,
+                      }))}
+                      setFieldValue={setFieldValue}
+                      placeholder="Select destination emails..."
                     />
                   </div>
                   <div className="actions">
